@@ -1,0 +1,8 @@
+.idea/
+*.pyc
+__pycache__/
+log/
+media/
+*.pid
+*.sqlite3
+*.sh
