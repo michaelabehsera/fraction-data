@@ -24,13 +24,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # rest_framework
-    'oauth2_provider',
     'rest_framework',
     'rest_framework_swagger',
 
     # accounts
     'apps.accounts',
-    
+
+    # dataset
+    'apps.dataset',
+
     # common
     'apps.common',
 
@@ -134,3 +136,9 @@ LOGIN_URL = 'accounts:auth_login'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = LOGIN_URL
 
+
+# REST Framework
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+}
