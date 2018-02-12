@@ -23,49 +23,24 @@
 {% endblock header %}
 
 {% block content %}
-<div class="wrap">
-    <div class="heading_box">
-      <h1>Image Dataset Name</h1>
-      <p>Job description: Collect images that are...</p>
-    </div>
-    <div class="url_api">
-      <form class="pure-form">
-        <input type="password" placeholder="API key url goes here">
-      </form>
-    </div>
-</div>
+  <div class="form-wrap">
+    <h1>Create New Dataset</h1>
 
-<table class="pure-table">
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Make</th>
-            <th>Model</th>
-            <th>Year</th>
-        </tr>
-    </thead>
+    {% if form.errors %}
+        {% for field in form %}
+            {% for error in field.errors %}
+              {% include 'alerts/danger.html' with alert_title='' alert_body=error %}
+            {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+            {% include 'alerts/danger.html' with alert_title='' alert_body=error %}
+        {% endfor %}
+    {% endif %}
 
-    <tbody>
-        <tr>
-            <td>1</td>
-            <td>Honda</td>
-            <td>Accord</td>
-            <td>2009</td>
-        </tr>
-
-        <tr>
-            <td>2</td>
-            <td>Toyota</td>
-            <td>Camry</td>
-            <td>2012</td>
-        </tr>
-
-        <tr>
-            <td>3</td>
-            <td>Hyundai</td>
-            <td>Elantra</td>
-            <td>2010</td>
-        </tr>
-    </tbody>
-</table>
+    <form class="m-form pure-form" method="post">{% csrf_token %}
+      {{ form.name }}
+      {{ form.description }}
+      <button class="pure-button pure-button-primary" type="submit">Create Dataset</button>
+    </form>
+  </div>
 {% endblock %}

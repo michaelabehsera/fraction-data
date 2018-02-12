@@ -1,3 +1,11 @@
-from django.shortcuts import render
+from django.views.generic.edit import CreateView
 
-# Create your views here.
+from apps.common.mixins import LoginRequiredMixin
+from .forms import OrderCreateForm
+
+
+class OrderCreateView(LoginRequiredMixin, CreateView):
+
+    template_name = 'dataset/create_order.html'
+    form_class = OrderCreateForm
+    success_url = '/'

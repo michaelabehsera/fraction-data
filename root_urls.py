@@ -12,6 +12,7 @@ urlpatterns = [
 
     url(r'', include('apps.common.urls')),
     url(r'^account/', include('apps.accounts.urls')),
+    url(r'^dataset/', include('apps.dataset.urls')),
 
     url(r'^api/v1/', include(api_v1_router.urls)),
     url(r'^api/docs/', swagger_doc),
