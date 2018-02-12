@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Signup{% endblock %}
+
+{% block header %}
+  <header>
+    <div class="pure-menu pure-menu-horizontal">
+      <ul class="pure-menu-list">
+          <li class="pure-menu-item pure-menu-selected"><a href="{% url 'accounts:auth_login' %}" class="pure-menu-link">Login</a></li>
+      </ul>
+    </div>
+  </header>
+{% endblock header %}
+
+{% block content %}
+  <div class="form-wrap">
+    <h1>Sign up</h1>
+
+    {% if form.errors %}
+        {% for field in form %}
+            {% for error in field.errors %}
+              {% include 'alerts/danger.html' with alert_title='' alert_body=error %}
+            {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+            {% include 'alerts/danger.html' with alert_title='' alert_body=error %}
+        {% endfor %}
+    {% endif %}
+
+    <form class="pure-form m-form" method="post">{% csrf_token %}
+      {{ form.email }}
+      {{ form.password1 }}
+      {{ form.password2 }}
+
+      <button class="pure-button pure-button-primary m-btn--submit">Sign up</button>
+      <div class="clearfix"></div>
+    </form>
+  </div>
+{% endblock content %}

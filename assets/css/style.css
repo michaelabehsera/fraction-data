@@ -1,0 +1,71 @@
+/*
+----------------------
+ General style
+----------------------
+ */
+
+.clearfix:after {
+	content : "";
+	display : block;
+	clear   : both;
+}
+
+.form-wrap {
+    width: 400px;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0px 2px 60px #dcdfe4;
+    margin: 0 auto;
+    margin-top: 200px;
+    border-radius: 2px;
+}
+
+.m-form .m-input {
+    width: 100%;
+}
+
+.m-form .m-btn--submit {
+    float: right;
+}
+
+/*
+----------------------
+ Alert style
+----------------------
+ */
+.alert {
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+}
+.alert.m-alert--icon {
+    display: table;
+    padding: 0;
+}
+
+.alert.m-alert--outline.alert-danger {
+    width: 100%;
+    border-color: #f4516c;
+    color: #f4516c;
+    font-weight: 400;
+}
+
+.alert.m-alert--icon .m-alert__text {
+    display: table-cell;
+    vertical-align: middle;
+    width: auto;
+    padding: 10px;
+}
+
+
+/*
+----------------------
+ Login form
+----------------------
+ */
+
+.m-login__form .m-signup__link {
+    float: left;
+    line-height: 50px;
+}
+

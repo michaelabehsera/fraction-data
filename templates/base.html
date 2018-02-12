@@ -1,0 +1,49 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+
+    <!-- fraction_pure_style -->
+    <link rel="stylesheet" href="{% static 'css/fraction_pure_style/menus.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fraction_pure_style/menus-core.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fraction_pure_style/buttons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fraction_pure_style/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fraction_pure_style/grids.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fraction_pure_style/forms.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fraction_pure_style/tables.css' %}">
+
+    <!-- custome css -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+  </head>
+
+  <body>
+    <!-- header -->
+    {% block header %}
+      <header>
+        <div class="pure-menu pure-menu-horizontal">
+          <ul class="pure-menu-list">
+              <li class="pure-menu-item pure-menu-selected"><a href="#" class="pure-menu-link">Home</a></li>
+              <li class="pure-menu-item pure-menu-selected"><a href="{% url 'accounts:auth_logout' %}" class="pure-menu-link">Logout</a></li>
+              <li class="pure-menu-item pure-menu-selected"><a href="#" class="pure-menu-link">Create Dataset</a></li>
+              <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+                  <a href="#" id="menuLink1" class="pure-menu-link">My Data</a>
+                  <ul class="pure-menu-children">
+                      <li class="pure-menu-item"><a href="#" class="pure-menu-link">Data #1</a></li>
+                      <li class="pure-menu-item"><a href="#" class="pure-menu-link">Data #2</a></li>
+                      <li class="pure-menu-item"><a href="#" class="pure-menu-link">Data #3</a></li>
+                  </ul>
+              </li>
+          </ul>
+        </div>
+      </header>
+    {% endblock header %}
+
+    <!-- content -->
+    {% block content %}
+    {% endblock content %}
+  </body>
+</html>

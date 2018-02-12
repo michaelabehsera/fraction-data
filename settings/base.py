@@ -23,10 +23,18 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # rest_framework
+    'oauth2_provider',
     'rest_framework',
     'rest_framework_swagger',
 
+    # accounts
+    'apps.accounts',
+    
+    # common
     'apps.common',
+
+    # api
     'api.v1'
 ]
 
@@ -45,7 +53,9 @@ ROOT_URLCONF = 'root_urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates')
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -116,3 +126,11 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+# user settings
+AUTH_USER_MODEL = 'accounts.User'
+LOGIN_URL = 'accounts:auth_login'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = LOGIN_URL
+

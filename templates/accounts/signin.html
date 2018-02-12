@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block header %}
+  <header>
+    <div class="pure-menu pure-menu-horizontal">
+      <ul class="pure-menu-list">
+          <li class="pure-menu-item pure-menu-selected"><a href="{% url 'accounts:signup' %}" class="pure-menu-link">Register</a></li>
+      </ul>
+    </div>
+  </header>
+{% endblock header %}
+
+{% block content %}
+  <div class="form-wrap">
+    <h1>Sign in</h1>
+    <form class="m-login__form m-form pure-form" method="post">{% csrf_token %}
+      {{ form.username }}
+      {{ form.password }}
+      <button class="pure-button pure-button-primary m-signin__link m-btn--submit" type="submit">Sign in</button>
+
+      <a href="{% url 'accounts:signup' %}" class="m-signup__link m-link">create a new account</a>
+      <div class="clearfix"></div>
+    </form>
+  </div>
+{% endblock content %}
