@@ -18,6 +18,9 @@
     <!-- custome css -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
+    <!-- Javascript -->
+	  <script type="text/javascript" src="{% static 'js/libs/jquery.min.js' %}"></script>
+
   </head>
 
   <body>
@@ -28,5 +31,7 @@
     <!-- content -->
     {% block content %}
     {% endblock content %}
+
+    {% block extra_script %}{% endblock extra_script %}
   </body>
 </html>

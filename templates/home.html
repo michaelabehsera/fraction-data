@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Fraction Data Set{% endblock %}
 
@@ -6,15 +7,15 @@
   <header>
     <div class="pure-menu pure-menu-horizontal">
       <ul class="pure-menu-list">
-          <li class="pure-menu-item pure-menu-selected"><a href="#" class="pure-menu-link">Home</a></li>
+          <li class="pure-menu-item pure-menu-selected"><a href="/" class="pure-menu-link">Home</a></li>
           <li class="pure-menu-item pure-menu-selected"><a href="{% url 'accounts:auth_logout' %}" class="pure-menu-link">Logout</a></li>
           <li class="pure-menu-item pure-menu-selected"><a href="{% url 'dataset:creat_order' %}" class="pure-menu-link">Create Dataset</a></li>
           <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
               <a href="#" id="menuLink1" class="pure-menu-link">My Data</a>
               <ul class="pure-menu-children">
-                  <li class="pure-menu-item"><a href="#" class="pure-menu-link">Data #1</a></li>
-                  <li class="pure-menu-item"><a href="#" class="pure-menu-link">Data #2</a></li>
-                  <li class="pure-menu-item"><a href="#" class="pure-menu-link">Data #3</a></li>
+                {% for order in order_list %}
+                  <li class="pure-menu-item"><a href="#" data-order-id="{{ order.id }}" class="pure-menu-link"># {{ order.name }}</a></li>
+                {% endfor %}
               </ul>
           </li>
       </ul>
@@ -23,49 +24,44 @@
 {% endblock header %}
 
 {% block content %}
+
 <div class="wrap">
+  <div class="api-link-area">
     <div class="heading_box">
       <h1>Image Dataset Name</h1>
       <p>Job description: Collect images that are...</p>
     </div>
-    <div class="url_api">
-      <form class="pure-form">
-        <input type="password" placeholder="API key url goes here">
-      </form>
+    <div class="url_api pure-form">
+      <input type="text" id="api-key-url" placeholder="API key url goes here">
     </div>
+  </div>
+
+  <table id="image-data-table" class="pure-table">
+		<thead>
+			<tr>
+				<th data-col="number">#</th>
+				<th data-col="age">Age</th>
+				<th data-col="customer">Customer</th>
+				<th data-col="weight">weight</th>
+				<th data-col="vegetarian">Vgetarian</th>
+			</tr>
+		</thead>
+
+		<tbody>
+		</tbody>
+	</table>
+
+	<div class="table-action">
+		<button class="pure-button new-row">New Row</button>
+		<button class="pure-button pure-button-primary save-table">Save Changes</button>
+	</div>
 </div>
-
-<table class="pure-table">
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Make</th>
-            <th>Model</th>
-            <th>Year</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        <tr>
-            <td>1</td>
-            <td>Honda</td>
-            <td>Accord</td>
-            <td>2009</td>
-        </tr>
-
-        <tr>
-            <td>2</td>
-            <td>Toyota</td>
-            <td>Camry</td>
-            <td>2012</td>
-        </tr>
-
-        <tr>
-            <td>3</td>
-            <td>Hyundai</td>
-            <td>Elantra</td>
-            <td>2010</td>
-        </tr>
-    </tbody>
-</table>
 {% endblock %}
+
+{% block extra_script %}
+
+   {% csrf_token %}
+
+  <script type="text/javascript" src="{% static 'js/detail-table.js' %}"></script>
+
+{% endblock extra_script %}

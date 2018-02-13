@@ -5,6 +5,7 @@ from django.utils.translation import ugettext as _
 
 from .forms import UserChangeForm, UserCreationForm
 from .models import User
+# from rest_framework.authtoken.admin import TokenAdmin
 
 
 class UserAdmin(BaseUserAdmin):
@@ -31,3 +32,5 @@ class UserAdmin(BaseUserAdmin):
 
 admin.site.register(User, UserAdmin)
 admin.site.unregister(Group)
+
+# TokenAdmin.raw_id_fields = ('user',)

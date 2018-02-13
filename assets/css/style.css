@@ -77,3 +77,66 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder{
     line-height: 50px;
 }
 
+/*
+----------------------
+ Detail Table
+----------------------
+ */
+
+body:after {
+	content: "";
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 99999;
+	display: block;
+	width: 0;
+	height: 0;
+	background: #fff url(../img/loading-spinner.svg) center center no-repeat;
+	background-size: 120px 120px;
+	opacity: 0;
+
+	-webkit-transition: opacity .3s;
+	-moz-transition: opacity .3s;
+	-o-transition: opacity .3s;
+	transition: opacity .3s;
+}
+
+body.loading:after {
+	width: 100%;
+	height: 100%;
+	opacity: 0.8;
+}
+
+.table-action {
+	margin: 30px 0;
+	text-align: right;
+}
+
+[contenteditable],
+[data-elem="checkbox"] {
+	-webkit-transition: box-shadow .3s;
+	-moz-transition: box-shadow .3s;
+	-o-transition: box-shadow .3s;
+	transition: box-shadow .3s;
+}
+
+[contenteditable]:focus,
+[data-elem="checkbox"]:active {
+	outline: none;
+
+	-webkit-box-shadow: inset 0 0 4px rgba(0,0,0,.4);
+	-moz-box-shadow: inset 0 0 4px rgba(0,0,0,.4);
+	-o-box-shadow: inset 0 0 4px rgba(0,0,0,.4);
+	box-shadow: inset 0 0 4px rgba(0,0,0,.4);
+}
+
+[data-elem="checkbox"] input[type="checkbox"],
+[data-elem="checkbox"] label {
+	display: none;
+}
+
+[data-elem="checkbox"] input[type="checkbox"]:checked ~ label[data-val="true"],
+[data-elem="checkbox"] input[type="checkbox"]:not(:checked) ~ label[data-val="false"] {
+	display: block;
+}

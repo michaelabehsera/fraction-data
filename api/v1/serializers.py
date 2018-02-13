@@ -6,10 +6,11 @@ from apps.dataset.models import Order, OrderDetail
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
-        fields = '__all__'
+        fields = ('name', 'description')
 
 
 class OrderDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderDetail
-        exclude = ('order',)
+        fields = ('id', 'customer', 'age', 'weight', 'is_vegetarian')
+
