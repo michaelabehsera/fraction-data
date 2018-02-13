@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Fraction Data Set{% endblock %}
+
+{% block header %}
+  <header>
+    <div class="pure-menu pure-menu-horizontal">
+      <ul class="pure-menu-list">
+          <li class="pure-menu-item pure-menu-selected"><a href="/" class="pure-menu-link">Home</a></li>
+          <li class="pure-menu-item pure-menu-selected"><a href="{% url 'accounts:auth_logout' %}" class="pure-menu-link">Logout</a></li>
+          <li class="pure-menu-item pure-menu-selected"><a href="{% url 'dataset:creat_order' %}" class="pure-menu-link">Create Dataset</a></li>
+          <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+              <a href="#" id="menuLink1" class="pure-menu-link">My Data</a>
+              <ul class="pure-menu-children">
+                {% for order in order_list %}
+                  <li class="pure-menu-item"><a href="{% url 'dataset:order_detail' order_id=order.id %}" class="pure-menu-link"># {{ order.name }}</a></li>
+                {% endfor %}
+              </ul>
+          </li>
+      </ul>
+    </div>
+  </header>
+{% endblock header %}
+
+{% block content %}
+
+<div class="wrap">
+  <div class="api-link-area">
+    <div class="heading_box">
+      <h1>{{ order_obj.name }}</h1>
+      <p>Description: {{ order_obj.description }}</p>
+    </div>
+    <div class="url_api pure-form">
+      <input type="text" id="api-key-url" placeholder="API key url goes here" readonly
+             value="http://{{ host_url }}{{ api_url }}?format=json" style="width: 400px">
+    </div>
+    {% csrf_token %}
+  </div>
+
+  <table id="image-data-table" class="pure-table">
+		<thead>
+			<tr>
+				<th data-col="number">#</th>
+				<th data-col="age">Age</th>
+				<th data-col="customer">Customer</th>
+				<th data-col="weight">weight</th>
+				<th data-col="vegetarian">Vgetarian</th>
+			</tr>
+		</thead>
+
+		<tbody>
+		</tbody>
+	</table>
+
+	<div class="table-action">
+		<button class="pure-button new-row">New Row</button>
+		<button class="pure-button pure-button-primary save-table">Save Changes</button>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block extra_script %}
+
+  <script>
+    var api_url = "{{ api_url }}";
+  </script>
+  <script type="text/javascript" src="{% static 'js/detail-table.js' %}"></script>
+
+{% endblock extra_script %}

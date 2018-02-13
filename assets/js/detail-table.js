@@ -1,8 +1,12 @@
 /*****************************************
 * Custom Javascript
 */
-var ajaxUrlRoot = "",
-	ajaxUrl = {};
+
+var ajaxUrl = {
+				get      : api_url,
+				put      : api_url + "{id}/",
+				post     : api_url
+			};
 
 
 (function($) {
@@ -12,45 +16,6 @@ var ajaxUrlRoot = "",
 
 	$.extend({
 		table_row_tpl: "",
-
-		change_url: function(url) {
-            url = url.replace(/^\/|\/$/g, "");
-
-            var rootUrl = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/";
-			ajaxUrlRoot = rootUrl + url + "/";
-			ajaxUrl = {
-				get      : ajaxUrlRoot,
-				getAll   : ajaxUrlRoot + "{id}/",
-				put      : ajaxUrlRoot + "{id}/",
-				post     : ajaxUrlRoot,
-				getOrder : rootUrl + "api/v1/orders/{id}/"
-			};
-
-			var t = url.match(/^api\/v1\/order\/(\d+)\/data/);
-
-			if(!t.length || typeof(t[1]) == "undefined") {
-				return ;
-			}
-
-			$.get_order_data(parseInt(t[1]), function(data) {
-				var nameElem = $("#dataset-name"),
-					descElem = $("#dataset-desc");
-
-				if(data.name) {
-					nameElem.text(data.name);
-				} else {
-					nameElem.text(nameElem.data("placeholder"));
-				}
-
-				if(data.description) {
-					descElem.text(data.description);
-				} else {
-					descElem.text(descElem.data("placeholder"));
-				}
-			}, function (jqXHR, textStatus, errorThrown) {
-				alert("Wrong API Request");
-            });
-		},
 
 		// check token
 		csrf_safe_method: function(method) {
@@ -93,36 +58,6 @@ var ajaxUrlRoot = "",
 		},
 
 		// AJAX modules ---------
-		get_order_data: function(orderId, callback, errorCallback) {
-			// ajax
-			$.ajax({
-				type         : "GET",
-				url          : ajaxUrl.getOrder.replace("{id}", orderId),
-				dataType     : "json",
-				jsonCallback : "callback",
-				beforeSend   : function(jqXHR) {
-					$("body").addClass("loading");
-				},
-				complete     : function(jqXHR, textStatus) {
-					// make delay for animation effect
-					setTimeout(function() {
-						$("body").removeClass("loading");
-					}, 300);
-				},
-				error        : function(jqXHR, textStatus, errorThrown) {
-
-					if(errorCallback) {
-						errorCallback(jqXHR, textStatus, errorThrown);
-					}
-					// body...
-				},
-				success      : function(response, textStatus, jqXHR) {
-					if(callback) {
-						callback(response);
-					}
-				}
-			});
-		},
 
 		get_table_data: function(callback, errorCallback) {
 			// ajax
@@ -317,32 +252,6 @@ var ajaxUrlRoot = "",
 	});
 
 	////////////////////////////////////////////
-	// Event callbacks
-
-	$(document).on("click", "[data-order-id]", function(e) {
-		var ulrElem = $("#api-key-url"),
-			url = "/api/v1/order/" + $(this).data("order-id") + "/data/";
-		if(ulrElem.length) {
-			ulrElem.val(url);
-
-			$('.dataset_name').text($(this).text());
-
-			$.change_url(url);
-			$("#image-data-table").init_table();
-		}
-	});
-
-	// change url and initialize table while change api key url
-	$(document).on("change", "#api-key-url", function(e) {
-		var url = $(this).val();
-
-		if(/api\/v1\/order\/[0-9]+\/data/.test(url)) {
-			$.change_url(url);
-			$("#image-data-table").init_table();
-		} else {
-			alert("Please enter API Key URL correctly.");
-		}
-	});
 
 	// save table
 	$(document).on("click", ".new-row", function() {
@@ -439,7 +348,7 @@ var ajaxUrlRoot = "",
 	// init form when document-ready
 	$(document).ready(function() {
 
-		//$("#image-data-table").init_table();
+		$("#image-data-table").init_table();
 
 	});
 })(jQuery);
