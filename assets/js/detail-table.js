@@ -14,14 +14,40 @@ var ajaxUrlRoot = "",
 		table_row_tpl: "",
 
 		change_url: function(url) {
-			var rootUrl = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/";
-			ajaxUrlRoot = rootUrl + url.replace(/^\/|\/$/g, "") + "/";
+            url = url.replace(/^\/|\/$/g, "");
+
+            var rootUrl = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/";
+			ajaxUrlRoot = rootUrl + url + "/";
 			ajaxUrl = {
-				get    : ajaxUrlRoot,
-				getAll : ajaxUrlRoot + "{id}/",
-				put    : ajaxUrlRoot + "{id}/",
-				post   : ajaxUrlRoot
+				get      : ajaxUrlRoot,
+				getAll   : ajaxUrlRoot + "{id}/",
+				put      : ajaxUrlRoot + "{id}/",
+				post     : ajaxUrlRoot,
+				getOrder : rootUrl + "api/v1/orders/{id}/"
 			};
+
+			var t = url.match(/^api\/v1\/order\/(\d+)\/data/);
+
+			if(!t.length || typeof(t[1]) == "undefined") {
+				return ;
+			}
+
+			$.get_order_data(parseInt(t[1]), function(data) {
+				var nameElem = $("#dataset-name"),
+					descElem = $("#dataset-desc");
+
+				if(data.name) {
+					nameElem.text(data.name);
+				} else {
+					nameElem.text(nameElem.data("placeholder"));
+				}
+
+				if(data.description) {
+					descElem.text(data.description);
+				} else {
+					descElem.text(descElem.data("placeholder"));
+				}
+			});
 		},
 
 		// check token
@@ -65,6 +91,36 @@ var ajaxUrlRoot = "",
 		},
 
 		// AJAX modules ---------
+		get_order_data: function(orderId, callback, errorCallback) {
+			// ajax
+			$.ajax({
+				type         : "GET",
+				url          : ajaxUrl.getOrder.replace("{id}", orderId),
+				dataType     : "json",
+				jsonCallback : "callback",
+				beforeSend   : function(jqXHR) {
+					$("body").addClass("loading");
+				},
+				complete     : function(jqXHR, textStatus) {
+					// make delay for animation effect
+					setTimeout(function() {
+						$("body").removeClass("loading");
+					}, 300);
+				},
+				error        : function(jqXHR, textStatus, errorThrown) {
+
+					if(errorCallback) {
+						errorCallback(jqXHR, textStatus, errorThrown);
+					}
+					// body...
+				},
+				success      : function(response, textStatus, jqXHR) {
+					if(callback) {
+						callback(response);
+					}
+				}
+			});
+		},
 
 		get_table_data: function(callback, errorCallback) {
 			// ajax
@@ -261,11 +317,13 @@ var ajaxUrlRoot = "",
 	////////////////////////////////////////////
 	// Event callbacks
 
-	$(document).on("click", "[data-order-id=\"1\"]", function(e) {
+	$(document).on("click", "[data-order-id]", function(e) {
 		var ulrElem = $("#api-key-url"),
 			url = "/api/v1/order/" + $(this).data("order-id") + "/data/";
 		if(ulrElem.length) {
 			ulrElem.val(url);
+
+			$('.dataset_name').text($(this).text());
 
 			$.change_url(url);
 			$("#image-data-table").init_table();
