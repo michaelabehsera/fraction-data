@@ -103,6 +103,7 @@ var ajaxUrlRoot = "",
 				type         : "PUT",
 				url          : ajaxUrl.put.replace("{id}", data.id),
 				data         : data,
+				dataType     : "json",
 
 				beforeSend   : function(jqXHR) {
 					// using jQuery
