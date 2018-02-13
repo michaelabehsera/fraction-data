@@ -47,7 +47,9 @@ var ajaxUrlRoot = "",
 				} else {
 					descElem.text(descElem.data("placeholder"));
 				}
-			});
+			}, function (jqXHR, textStatus, errorThrown) {
+				alert("Wrong API Request");
+            });
 		},
 
 		// check token
