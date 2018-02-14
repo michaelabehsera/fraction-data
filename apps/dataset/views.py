@@ -1,35 +1,31 @@
-from django.views.generic.edit import CreateView
 from django.views.generic.base import TemplateView
 
 from apps.common.mixins import LoginRequiredMixin
-from .forms import OrderCreateForm
-from .models import Order
+from .models import DataSet
 
 
-class OrderCreateView(LoginRequiredMixin, CreateView):
+class DataSetCreateView(LoginRequiredMixin, TemplateView):
 
-    template_name = 'dataset/create_order.html'
-    form_class = OrderCreateForm
-    success_url = '/'
+    template_name = 'dataset/create_dataset.html'
 
 
-class OrderDetailView(LoginRequiredMixin, TemplateView):
-    template_name = 'dataset/order_detail.html'
+class DataSetDetailView(LoginRequiredMixin, TemplateView):
+    template_name = 'dataset/detail_dataset.html'
 
     def get_context_data(self, **kwargs):
-        context = super(OrderDetailView, self).get_context_data(**kwargs)
+        context = super(DataSetDetailView, self).get_context_data(**kwargs)
 
-        order_id = self.kwargs['order_id']
+        dataset_id = self.kwargs['dataset_id']
 
-        context['order_list'] = Order.objects.all()
+        context['dataset_list'] = DataSet.objects.all()
         try:
-            order_obj = Order.objects.get(id=order_id)
+            dataset_obj = DataSet.objects.get(id=dataset_id)
 
-        except Order.DoesNotExist:
-            order_obj = None
+        except DataSet.DoesNotExist:
+            dataset_obj = None
 
-        context['order_obj'] = order_obj
-        context['api_url'] = "/api/v1/order/%s/data/" % order_id
+        context['dataset_obj'] = dataset_obj
+        context['api_url'] = "/api/v1/dataset/%s/data/" % dataset_id
         context['host_url'] = self.request.get_host()
 
         return context
