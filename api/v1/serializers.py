@@ -1,16 +1,16 @@
 from rest_framework import serializers
 
-from apps.dataset.models import Order, OrderDetail
+from apps.dataset.models import DataSet
 
 
-class OrderSerializer(serializers.ModelSerializer):
+class DataSetCreatSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Order
-        fields = ('name', 'description')
+        model = DataSet
+        fields = ('name', 'description', 'column_names')
 
 
-class OrderDetailSerializer(serializers.ModelSerializer):
+class DataSetDetailSerializer(serializers.ModelSerializer):
     class Meta:
-        model = OrderDetail
-        fields = ('id', 'customer', 'age', 'weight', 'is_vegetarian')
+        model = DataSet
+        fields = ('data',)
 

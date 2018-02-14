@@ -1,7 +1,21 @@
-from rest_framework import routers
+from django.conf.urls import url
+from rest_framework.urlpatterns import format_suffix_patterns
 
-from .views import OrderViewSet, OrderDetailViewSet
+from .views import DataSetList, DataSetDetail
 
-api_v1_router = routers.SimpleRouter()
-api_v1_router.register(r'^orders', OrderViewSet)
-api_v1_router.register(r'^order/(?P<order_id>[0-9]+)/data', OrderDetailViewSet, base_name='order_data')
+
+dataset_list = DataSetList.as_view({
+    'get': 'list',
+    'post': 'create'
+})
+dataset_meta = DataSetList.as_view({
+    'get': 'retrieve',
+    'put': 'update',
+    'delete': 'destroy'
+})
+
+urlpatterns = format_suffix_patterns([
+    url(r'^datasets/$', dataset_list, name='dataset-list'),
+    url(r'^datasets/(?P<pk>[0-9]+)/$', dataset_meta, name='dataset-meta'),
+    url(r'^dataset/(?P<pk>[0-9]+)/data/$', DataSetDetail.as_view()),
+])
