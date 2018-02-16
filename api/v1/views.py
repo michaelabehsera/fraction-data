@@ -40,6 +40,9 @@ class DataSetDetail(APIView):
         serializer = DataSetDetailSerializer(dataset)
         return Response(serializer.data)
 
+    def post(self, request, pk, format=None):
+        return self.put(request, pk, format)
+
     def put(self, request, pk, format=None):
         dataset = self.get_object(pk)
         serializer = DataSetDetailSerializer(dataset, data=request.data)
@@ -50,7 +53,7 @@ class DataSetDetail(APIView):
 
     def delete(self, request, pk, format=None):
         dataset = self.get_object(pk)
-        serializer = DataSetDetailSerializer(dataset, data={})
+        serializer = DataSetDetailSerializer(dataset, data=None)
         if serializer.is_valid():
             serializer.save()
             return Response(status=status.HTTP_204_NO_CONTENT)

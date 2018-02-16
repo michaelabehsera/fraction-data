@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Fraction Data Set{% endblock %}
+
+{% block header %}
+  <header>
+    <div class="pure-menu pure-menu-horizontal">
+      <ul class="pure-menu-list">
+          <li class="pure-menu-item pure-menu-selected"><a href="/" class="pure-menu-link">Home</a></li>
+          <li class="pure-menu-item pure-menu-selected"><a href="{% url 'accounts:auth_logout' %}" class="pure-menu-link">Logout</a></li>
+          <li class="pure-menu-item pure-menu-selected"><a href="{% url 'dataset:create_dataset' %}" class="pure-menu-link">Create Dataset</a></li>
+          <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+              <a href="#" id="menuLink1" class="pure-menu-link">My Data</a>
+              <ul class="pure-menu-children">
+                {% for ds in dataset_list %}
+                  <li class="pure-menu-item"><a href="{% url 'dataset:detail_dataset' dataset_id=ds.id %}" class="pure-menu-link"># {{ ds.name }}</a></li>
+                {% endfor %}
+              </ul>
+          </li>
+      </ul>
+    </div>
+  </header>
+{% endblock header %}
+
+{% block content %}
+  Fake code
+{% endblock %}

@@ -1,15 +1,16 @@
-from django.views.generic.base import View
-from django.shortcuts import redirect
+from django.views.generic.base import TemplateView
 
 from .mixins import LoginRequiredMixin
-from apps.dataset.models import Order
+from apps.dataset.models import DataSet
 
 
-class HomeView(LoginRequiredMixin, View):
+class HomeView(LoginRequiredMixin, TemplateView):
 
-    def get(self, request, *args, **kwargs):
-        first_order = Order.objects.first()
-        if first_order is None:
-            return redirect('/dataset/create_order/')
-        else:
-            return redirect('/dataset/order_detail/%d/' % first_order.id)
+    template_name = 'home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+
+        context['dataset_list'] = DataSet.objects.all()
+
+        return context

@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Fraction Data Set{% endblock %}
+
+{% block header %}
+  <header>
+    <div class="pure-menu pure-menu-horizontal">
+      <ul class="pure-menu-list">
+
+          <li class="pure-menu-item pure-menu-selected">
+            <a href="/" class="pure-menu-link">Home</a></li>
+
+          <li class="pure-menu-item pure-menu-selected">
+            <a href="{% url 'accounts:auth_logout' %}" class="pure-menu-link">Logout</a></li>
+
+          <li class="pure-menu-item pure-menu-selected">
+            <a href="{% url 'dataset:create_dataset' %}" class="pure-menu-link">Create Dataset</a></li>
+
+          <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+              <a href="#" id="menuLink1" class="pure-menu-link">My Data</a>
+              <ul class="pure-menu-children">
+                {% for ds in dataset_list %}
+                  <li class="pure-menu-item">
+                    <a href="{% url 'dataset:detail_dataset' dataset_id=ds.id %}"
+                       class="pure-menu-link"># {{ ds.name }}</a></li>
+                {% endfor %}
+              </ul>
+          </li>
+      </ul>
+    </div>
+  </header>
+{% endblock header %}
+
+{% block content %}
+
+<div class="wrap">
+  <div class="heading_box">
+    <h1>{{ dataset_name }}</h1>
+    <p>Description: {{ dataset_desc }}</p>
+  </div>
+
+  <div class="url_api">
+    <form class="pure-form">{% csrf_token %}
+      <input type="text" id="api-url--text" placeholder="API key url goes here" value="{{ api_url }}" readonly>
+      <button id="copy-clipboard" class="pure-button-primary">Copy</button>
+    </form>
+  </div>
+
+  <div class="columns-desc">
+    {% for col_name, col_desc in columns %}
+    <h4><b>Column Name:</b> {{ col_name }}</h4>
+    <p><b>Column Description:</b> {{ col_desc }}</p>
+    {% endfor %}
+  </div>
+
+  {% if col_names %}
+  <table id="dataset-table" class="pure-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        {% for col in col_names %}
+        <th data-field="{{ col }}">{{ col }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+  </table>
+
+  <div class="table-action">
+    <button id="dataset-newrow" class="pure-button">New Row</button>
+    <button id="dataset-save" class="pure-button pure-button-primary save-table">Save Changes</button>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_script %}
+
+  <script type="text/javascript" src="{% static '/js/detail-dataset.js' %}"></script>
+{% endblock extra_script %}

@@ -3,6 +3,27 @@
  General style
 ----------------------
  */
+html,
+body {
+	margin: 0;
+	padding: 0;
+	letter-spacing: 0;
+}
+
+html *,
+body * {
+	outline: inherit;
+	word-break: break-word;
+
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-transition: color .3s, opacity .3s, background-color .3s;
+	-moz-transition: color .3s, opacity .3s, background-color .3s;
+	-o-transition: color .3s, opacity .3s, background-color .3s;
+	transition: color .3s, opacity .3s, background-color .3s;
+}
 
 .clearfix:after {
 	content : "";
@@ -108,21 +129,80 @@ body.loading:after {
 	opacity: 0.8;
 }
 
+.pure-menu-horizontal .pure-menu-children {
+	width: 100%;
+	-webkit-box-shadow: 0 2px 4px rgba(0,0,0,.2);
+	-moz-box-shadow: 0 2px 4px rgba(0,0,0,.2);
+	-o-box-shadow: 0 2px 4px rgba(0,0,0,.2);
+	box-shadow: 0 2px 4px rgba(0,0,0,.2);
+}
+
+.wrap {
+	padding: 0 15px;
+}
+
 .table-action {
 	margin: 30px 0;
 	text-align: right;
 }
 
-[contenteditable],
-[data-elem="checkbox"] {
+#new-dataset-col {
+	color: #0078e7;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.empty-table {
+	padding: 30px;
+	width: 100%;
+	color: #aaa;
+	font-style: italic;
+	font-size: 12px;
+	text-align: center;
+	border: 1px solid #eee;
+	background-color: #f0f0f0;
+}
+
+#copy-clipboard {
+	margin-bottom: 14px;
+	display: inline-block;
+	padding: 1.0em 1.0em;
+	vertical-align: middle;
+	font-size: 14px;
+	border: 1px solid rgb(0, 120, 231);
+
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	-o-border-radius: 2px;
+	border-radius: 2px;
+}
+
+.columns-desc {
+	margin-bottom: 30px;
+}
+.columns-desc h4,
+.columns-desc p {
+	margin: 10px 0;
+	color: #333;
+}
+.columns-desc h4,
+.columns-desc p {
+	font-weight: 400;
+	font-size: 14px;
+}
+
+[contenteditable] {
 	-webkit-transition: box-shadow .3s;
 	-moz-transition: box-shadow .3s;
 	-o-transition: box-shadow .3s;
 	transition: box-shadow .3s;
 }
 
-[contenteditable]:focus,
-[data-elem="checkbox"]:active {
+[contenteditable]:focus {
 	outline: none;
 
 	-webkit-box-shadow: inset 0 0 4px rgba(0,0,0,.4);
@@ -131,12 +211,67 @@ body.loading:after {
 	box-shadow: inset 0 0 4px rgba(0,0,0,.4);
 }
 
-[data-elem="checkbox"] input[type="checkbox"],
 [data-elem="checkbox"] label {
 	display: none;
 }
 
-[data-elem="checkbox"] input[type="checkbox"]:checked ~ label[data-val="true"],
-[data-elem="checkbox"] input[type="checkbox"]:not(:checked) ~ label[data-val="false"] {
+/* Create New Dataset */
+.form-main {
+	margin-top: 10%;
+	margin-bottom: 10%;
+	height: auto;
+}
+
+.form-main .additional-fields {
+	margin-top: 0;
+}
+
+.form-main .action-wrap:after,
+.form-main .new-col:after {
+	content: "";
 	display: block;
+	clear: both;
+}
+
+.form-main .new-col {
+	margin: 0;
+	padding-bottom: 0;
+	padding-top: 15px;
+	border-top: 1px solid #cbcfd8;
+}
+.form-main .new-col:first-of-type {
+	margin-top: 0;
+}
+
+.form-main .new-col input {
+	margin: 0 0 15px 0;
+	display: block;
+	width: 100%;
+}
+
+.form-main .new-col .col-2-field:last-of-type {
+	margin-right: 0;
+}
+
+.action-wrap #new-dataset-col {
+	float: right;
+	clear: both;
+	margin: 0;
+	display: block;
+}
+
+.action-wrap #create-dataset {
+    display: block;
+    width: 100%;
+}
+
+.action-wrap #new-dataset-col {
+	margin: 0 0 15px 0;
+}
+
+.action-wrap hr {
+	clear: both;
+	margin: 15px 0;
+	border-width: 0;
+	border-top: 1px solid #cbcfd8;
 }

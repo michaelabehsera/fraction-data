@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Fraction Data Set{% endblock %}
+
+{% block header %}
+  <header>
+    <div class="pure-menu pure-menu-horizontal">
+      <ul class="pure-menu-list">
+          <li class="pure-menu-item pure-menu-selected">
+            <a href="/" class="pure-menu-link">Home</a></li>
+
+          <li class="pure-menu-item pure-menu-selected">
+            <a href="{% url 'accounts:auth_logout' %}" class="pure-menu-link">Logout</a></li>
+
+          <li class="pure-menu-item pure-menu-selected">
+            <a href="{% url 'dataset:create_dataset' %}" class="pure-menu-link">Create Dataset</a></li>
+      </ul>
+    </div>
+  </header>
+{% endblock header %}
+
+{% block content %}
+  <div class="wrap">
+		<div class="form-main">
+
+      <h1>Create New Dataset</h1>
+      <form id="new-dataset-form" class="pure-form">{% csrf_token %}
+        <input type="text" id="dataset-title" placeholder="Title" style="width: 100%;" required>
+        <textarea id="dataset-desc" placeholder="Description" style="width: 100%;"></textarea>
+
+        <div id="new-col-form" class="additional-fields"></div>
+
+        <script id="new-col-form-tpl" type="text/template">
+          <div class="new-col">
+            <input type="text" name="col-name" placeholder="Column Name">
+            <input type="text" name="col-desc" placeholder="Column Description">
+          </div>
+        </script>
+
+        <div class="action-wrap">
+          <a id="new-dataset-col" data-target="#new-col-form" data-tpl="#new-col-form-tpl">Add New Column</a>
+          <button id="create-dataset" class="pure-button pure-button-primary">Create Dataset</button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+
+{% block extra_script %}
+
+	<script type="text/javascript" src="{% static '/js/create-dataset.js' %}"></script>
+
+{% endblock extra_script %}

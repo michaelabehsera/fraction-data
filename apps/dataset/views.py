@@ -24,7 +24,15 @@ class DataSetDetailView(LoginRequiredMixin, TemplateView):
         except DataSet.DoesNotExist:
             dataset_obj = None
 
-        context['dataset_obj'] = dataset_obj
+        context['dataset_name'] = dataset_obj.name
+        context['dataset_desc'] = dataset_obj.description
+
+        column_names = dataset_obj.column_names
+
+        context['col_names'] = column_names.keys() if column_names is not None else None
+        context['col_descs'] = column_names.values() if column_names is not None else None
+        context['columns'] = zip(context['col_names'], context['col_descs']) if column_names is not None else None
+
         context['api_url'] = "/api/v1/dataset/%s/data/" % dataset_id
         context['host_url'] = self.request.get_host()
 
