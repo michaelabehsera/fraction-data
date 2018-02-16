@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     # rest_framework
     'rest_framework',
     'rest_framework_swagger',
+    'rest_framework.authtoken',
 
     # accounts
     'apps.accounts',
@@ -144,6 +145,11 @@ LOGOUT_REDIRECT_URL = LOGIN_URL
 # REST Framework
 
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
 
     'DEFAULT_RENDERER_CLASSES': (
@@ -152,9 +158,10 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.BrowsableAPIRenderer',
     ),
 
-    # 'DEFAULT_PERMISSION_CLASSES': (
-    #     'rest_framework.permissions.IsAuthenticated',
-    # )
+    'DEFAULT_PERMISSION_CLASSES': (
+        # 'rest_framework.permissions.IsAuthenticated',
+        'api.v1.permissions.HasToken',
+    )
 }
 
-CSRF_USE_SESSIONS = True
+# CSRF_USE_SESSIONS = True

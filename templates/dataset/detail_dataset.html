@@ -42,15 +42,16 @@
 
   <div class="url_api">
     <form class="pure-form">{% csrf_token %}
-      <input type="text" id="api-url--text" placeholder="API key url goes here" value="{{ api_url }}" readonly>
+      <input type="text" id="api-full-url" placeholder="API key url goes here" readonly>
       <button id="copy-clipboard" class="pure-button-primary">Copy</button>
+      <input type="hidden" id="api-url--text" value="{{ api_url }}">
     </form>
   </div>
 
   <div class="columns-desc">
     {% for col_name, col_desc in columns %}
-    <h4><b>Column Name:</b> {{ col_name }}</h4>
-    <p><b>Column Description:</b> {{ col_desc }}</p>
+    <h4><b>Column Name: {{ col_name }}</b></h4>
+    <p>Column Description: {{ col_desc }}</p>
     {% endfor %}
   </div>
 
@@ -75,6 +76,5 @@
 {% endblock %}
 
 {% block extra_script %}
-
   <script type="text/javascript" src="{% static '/js/detail-dataset.js' %}"></script>
 {% endblock extra_script %}

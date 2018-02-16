@@ -26,15 +26,20 @@ class DataSetDetailView(LoginRequiredMixin, TemplateView):
 
         context['dataset_name'] = dataset_obj.name
         context['dataset_desc'] = dataset_obj.description
-
-        column_names = dataset_obj.column_names
-
-        context['col_names'] = column_names.keys() if column_names is not None else None
-        context['col_descs'] = column_names.values() if column_names is not None else None
-        context['columns'] = zip(context['col_names'], context['col_descs']) if column_names is not None else None
-
         context['api_url'] = "/api/v1/dataset/%s/data/" % dataset_id
         context['host_url'] = self.request.get_host()
+
+        column_names = dataset_obj.column_names
+        if column_names is None or isinstance(column_names, str):
+            return context
+
+        if isinstance(column_names, list):
+            column_names = column_names[0]
+
+        if isinstance(column_names, dict):
+            context['col_names'] = column_names.keys()
+            context['col_descs'] = column_names.values()
+            context['columns'] = zip(context['col_names'], context['col_descs'])
 
         return context
 

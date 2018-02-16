@@ -1,5 +1,6 @@
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
+from rest_framework.authtoken import views
 
 from .views import SignupView
 from .forms import LoginForm
@@ -16,4 +17,6 @@ urlpatterns = [
         name='auth_login'),
 
     url(r'^logout/$', auth_views.logout_then_login, name='auth_logout'),
+
+    # url(r'^get_auth_token/', views.obtain_auth_token, name='get_auth_token'),
 ]
