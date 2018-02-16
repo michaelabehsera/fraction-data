@@ -259,9 +259,6 @@
 
 
 	$(document).ready(function() {
-		// fill url
-		var rootUrl = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port;
-		$("#api-full-url").val(rootUrl + api_url);
 
 		if($("#dataset-table").length) {
 			$("#dataset-table").init_table();

@@ -42,7 +42,8 @@
 
   <div class="url_api">
     <form class="pure-form">{% csrf_token %}
-      <input type="text" id="api-full-url" placeholder="API key url goes here" readonly>
+      <input type="text" id="api-full-url" placeholder="API key url goes here"
+             value="{{ host_url }}{{ api_url }}" readonly>
       <button id="copy-clipboard" class="pure-button-primary">Copy</button>
       <input type="hidden" id="api-url--text" value="{{ api_url }}">
     </form>

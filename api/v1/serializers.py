@@ -6,7 +6,7 @@ from apps.dataset.models import DataSet
 class DataSetCreatSerializer(serializers.ModelSerializer):
     class Meta:
         model = DataSet
-        fields = ('name', 'description', 'column_names')
+        fields = ('pk', 'name', 'description', 'column_names')
 
 
 class DataSetDetailSerializer(serializers.ModelSerializer):

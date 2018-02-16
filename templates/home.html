@@ -24,5 +24,109 @@
 {% endblock header %}
 
 {% block content %}
-  Fake code
+<div class="wrap">
+    <h1>Instructions</h1>
+		<div class="form-main" style="padding: 0; width: 90%; margin: 8% auto">
+      <div id="editor" style="height: 480px;font-size: 14px"># 1. Create a new DataSet
+
+import requests
+
+url = "{{ host_url }}/api/v1/datasets/"
+
+headers = {
+    'Content-Type': "application/json",
+    'Authorization': "Token {{ api_token }}",
+    'Cache-Control': "no-cache"
+    }
+
+payload = {
+            "name": "Health Survey",
+            "column_names": [{
+                "age": "Age of person in years",
+                "name": "First and last name",
+                "weight": "Weight in pounds",
+                "vegetarian": "Is the respondent a vegetarian?"
+                }],
+            "description": "Conduct a survey asking questions related to health in Townsville."
+          }
+
+response = requests.request("POST", url, data=payload, headers=headers)
+
+
+# 2. Get DataSets List
+
+response = requests.request("GET", url, headers=headers)
+
+  # result:
+  [
+      {
+          "pk": 1,
+          "name": "Fruit",
+          "description": "Fruit Description",
+          "column_names": {
+              "name": "fruit name"
+          }
+      },
+      {
+          "pk": 2,
+          "name": "Health Survey",
+          "description": "Conduct a survey asking questions related to health in Townsville.",
+          "column_names": [
+              {
+                  "age": "Age of person in years",
+                  "name": "First and last name",
+                  "weight": "Weight in pounds",
+                  "vegetarian": "Is the respondent a vegetarian?"
+              }
+          ]
+      }
+  ]
+
+
+  # 3. Get Detail of a DataSet (for example, dateset pk: 1)
+
+  import pandas as pd
+  import json
+  import requests
+
+  url = "{{ host_url }}/api/v1/dataset/1/data"
+
+  headers = {
+    'Content-Type': "application/json",
+    'Authorization': "Token {{ api_token }}",
+    'Cache-Control': "no-cache"
+    }
+
+  response = requests.request("GET", url, headers=headers)
+  json_resp = json.loads(response.text)
+
+  df = pd.DataFrame(json_resp['data'])
+  print(df)
+
+    # result
+            Name   Age
+    0        foo    10
+    1        bar    21
+    2        woo    25
+    ... ... ...
+
+      </div>
+    </div>
+</div>
 {% endblock %}
+
+{% block extra_script %}
+<script type="text/javascript" src="{% static 'js/libs/ace.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/libs/mode-python.js' %}"></script>
+<script>
+    var editor = ace.edit("editor");
+	  editor.setTheme("ace/theme/textmate");
+
+	  var PythonMode = ace.require("ace/mode/python").Mode;
+    editor.session.setMode(new PythonMode());
+    editor.setOptions({
+      readOnly: true
+    })
+</script>
+
+{% endblock extra_script %}

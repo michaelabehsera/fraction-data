@@ -27,7 +27,7 @@ class DataSetDetailView(LoginRequiredMixin, TemplateView):
         context['dataset_name'] = dataset_obj.name
         context['dataset_desc'] = dataset_obj.description
         context['api_url'] = "/api/v1/dataset/%s/data/" % dataset_id
-        context['host_url'] = self.request.get_host()
+        context['host_url'] = "http://" + self.request.get_host()
 
         column_names = dataset_obj.column_names
         if column_names is None or isinstance(column_names, str):
