@@ -113,7 +113,8 @@ var datasetAjaxUrl = {
 		$.post_dataset(
 			data, 
 			function(response) { // success callback
-				alert("New Dataset is submitted successfully");
+				// alert("New Dataset is submitted successfully");
+				location.href = '/dataset/detail_dataset/' + response.pk + '/';
 			},
 			function() { // error callback
 				alert("New Dataset is not submitted correctly.");
