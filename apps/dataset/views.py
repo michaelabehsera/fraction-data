@@ -1,4 +1,5 @@
 from django.views.generic.base import TemplateView
+from django.http import Http404
 
 from apps.common.mixins import LoginRequiredMixin
 from .models import DataSet
@@ -22,7 +23,7 @@ class DataSetDetailView(LoginRequiredMixin, TemplateView):
             dataset_obj = DataSet.objects.get(id=dataset_id)
 
         except DataSet.DoesNotExist:
-            dataset_obj = None
+            return None
 
         context['dataset_name'] = dataset_obj.name
         context['dataset_desc'] = dataset_obj.description
@@ -43,3 +44,8 @@ class DataSetDetailView(LoginRequiredMixin, TemplateView):
 
         return context
 
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        if context is None:
+            raise Http404
+        return self.render_to_response(context)

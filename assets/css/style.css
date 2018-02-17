@@ -137,6 +137,13 @@ body.loading:after {
 	box-shadow: 0 2px 4px rgba(0,0,0,.2);
 }
 
+.pure-menu-allow-hover:hover > .pure-menu-children,
+.pure-menu-active > .pure-menu-children {
+    display: block;
+    position: absolute;
+    z-index: 9;
+}
+
 .wrap {
 	padding: 0 15px;
 }
@@ -275,3 +282,4 @@ body.loading:after {
 	border-width: 0;
 	border-top: 1px solid #cbcfd8;
 }
+
