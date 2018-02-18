@@ -34,7 +34,8 @@ import requests
 import json
 
 create_url = "{{ host_url }}/api/v1/datasets/"
-detail_url = "{{ host_url }}/dataset/detail_dataset/%d/"
+detail_web_url = "{{ host_url }}/dataset/detail_dataset/%d/"
+detail_api_url = "{{ host_url }}/api/v1/dataset/%d/data/"
 
 headers = {
     'Content-Type': "application/json",
@@ -59,8 +60,11 @@ json_resp = json.loads(response.text)
 
 if response.ok:
     print("A Dataset has been created successfully.")
-    dataset_url = detail_url % json_resp['pk']
-    print("Dataset URL: %s" % dataset_url)
+    detail_web_url = detail_web_url % json_resp['pk']
+    detail_api_url = detail_api_url % json_resp['pk']
+
+    print("Here is the dataset detail page: %s" % detail_web_url)
+    print("Here is the API key URL to pull data: %s" % detail_api_url)
 
 else:
     print("Error in creating dataset.")
