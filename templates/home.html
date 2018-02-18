@@ -29,11 +29,12 @@
 		<div class="form-main" style="padding: 0; width: 90%; margin: 8% auto">
       <div id="editor" style="height: 480px;font-size: 14px"># 1. Create a new DataSet
 
+
 import requests
 import json
 
 create_url = "{{ host_url }}/api/v1/datasets/"
-detail_url = "{{ host_url }}/api/v1/dataset/%d/data"
+detail_url = "{{ host_url }}/api/v1/dataset/%d/data/"
 
 headers = {
     'Content-Type': "application/json",
@@ -66,13 +67,13 @@ else:
     print(response.text)
 
 
-# 2. Get Detail of a DataSet (for example, dateset pk: 1)
+# 2. Get Detail of a DataSet
 
 import pandas as pd
 import json
 import requests
 
-url = "{{ host_url }}/api/v1/dataset/1/data"
+url = "{{ host_url }}/api/v1/dataset/1/data/"  # maybe the "dataset_url" above
 
 headers = {
   'Content-Type': "application/json",
@@ -88,7 +89,6 @@ if response.ok:
   print(df)
 else:
   print(response.text)
-
       </div>
     </div>
 </div>
