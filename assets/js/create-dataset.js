@@ -116,8 +116,12 @@ var datasetAjaxUrl = {
 				// alert("New Dataset is submitted successfully");
 				location.href = '/dataset/detail_dataset/' + response.pk + '/';
 			},
-			function() { // error callback
-				alert("New Dataset is not submitted correctly.");
+			function(response) { // error callback
+				var errInfo = $.parseJSON(response.responseText);
+				if (typeof(errInfo.name) == "undefined")
+					alert("Error in Creating DataSet: " + response.responseText);
+				else
+					alert(errInfo.name);
 			}
 		);
 	});
